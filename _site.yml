@@ -1,0 +1,12 @@
+name: "cald-boundaries-2023"
+output_dir: "docs"
+navbar:
+  title: "Boundary Review 2023 — Calderdale"
+  left:
+    - text: "Introduction"
+      href: "index.html"
+    - text: "Current position"
+      href: "current-position.html"
+output:
+  html_document:
+   theme: cosmo
