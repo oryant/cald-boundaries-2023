@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 author: "Tim O'Ryan"
-date: "16/06/2021"
+date: "17/06/2021"
 output: html_document
 ---
 ```{r setup, include=FALSE}
@@ -99,7 +99,7 @@ ggplot(shp_wards)+
   scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
   geom_label(
     data = shp_wards, 
-    size = 2.5,
+    size = 2,
     aes(X, Y, label = abbreviation),
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y

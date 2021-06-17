@@ -7,6 +7,8 @@ navbar:
       href: "index.html"
     - text: "Current position"
       href: "current-position.html"
+    - text: "Boundary Commission proposal"
+      href: "boundary-commission-proposal.html"
 output:
   html_document:
    theme: cosmo

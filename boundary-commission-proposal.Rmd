@@ -1,5 +1,5 @@
 ---
-title: "Current Position"
+title: "Boundary Commission Proposal"
 output: html_document
 ---
 
@@ -75,26 +75,25 @@ shp_wards$nudge_x[shp_wards$abbreviation == "TOW"] <- 250
 shp_wards$nudge_y[shp_wards$abbreviation == "BRI"] <- 200
 ```
 
-> Within the Borough of Calderdale, the existing Halifax constituency has an electorate within the permitted range, whereas the existing Calder Valley constituency is above the permitted range.
+> We therefore propose that the Hipperholme and Lightcliffe ward be transferred from the Calder Valley constituency to a proposed Batley and Hipperholme constituency, based largely on the existing Batley and Spen constituency. In order to bring the two Calderdale constituencies within the permitted electorate range, the two wards of Sowerby Bridge and Warley, and the two wards of Brighouse and Rastrick are exchanged between the proposed Halifax and Calder Valley constituencies.
 
 --- [Boundary Commission Initial proposals](https://boundarycommissionforengland.independent.gov.uk/wp-content/uploads/2021/06/2021-06-08-Initial-Proposals-Yorkshire-and-the-Humber-Region.pdf)
-
-## Constituency Boundaries
 
 ```{r, echo=FALSE, out.width="100%"}
 ggplot(shp_wards)+
   mytheme+ 
-  geom_sf(aes(fill = const_2019, alpha = popdensity), col = "grey20")+
+  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
+  geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
   theme(
     legend.position = "bottom",
     legend.title = element_blank()
   )+
   scale_fill_manual(
-    values = pal_colours,
-    limits = names(pal_colours)[1:2], # We don't need Batley and Hipperholme for this map
+      values = pal_colours,
+      limits = names(pal_colours)
   )+
   scale_alpha(range = c(0.75, 1), guide = "none")+
-  geom_sf(data = shp_polling_stations, aes(shape = "Polling station"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
+  geom_sf(data = shp_polling_stations, aes(shape = "Polling station"), size = 1.5, fill = "grey20", col = "grey20")+ # Plot polling stations on map
   scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
   geom_label(
     data = shp_wards, 
@@ -102,21 +101,23 @@ ggplot(shp_wards)+
     aes(X, Y, label = abbreviation),
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y
-  )
+    )
 ```
 
 ```{r, echo=FALSE}
 t1 <- wards %>%
-  select(const_2019, Electorate) %>%
-  group_by(const_2019) %>%
+  select(const_2023, Electorate) %>%
+  filter(const_2023 %in% c("Halifax", "Calder Valley")) %>%
+  group_by(const_2023) %>%
   summarise(Electorate = sum(Electorate))
-knitr::kable(t1, col.names = c("2019 Constituency", "Electorate"), format.args = list(big.mark = ","))
+knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args = list(big.mark = ","))
 ```
 
-## (No) Simple Solutions
+## Thoughts
 
-Evidently, there is no single ward that could be moved from Calder Valley to Halifax and still have both constituencies within the size restrictions. One or more wards would have to be exchanged, or the constituencies redrawn entirely. Wards that could be moved from Calder Valley to Halifax leaving both constituencies geographically unbroken are limited to **Hipperholme and Lightcliffe**, **Brighouse**, and **Luddenden**.
-
-It would also be necessary to maintain some geographical consistency. It would not make sense to move **Town** ward to Calder Valley while leaving the rest of Halifax intact, for example.
-
-**Next:** [Boundary Commission Proposal](./boundary-commission-proposal.html)
+* This achieves the commission's objectives -- both constituencies are of equal size and within the permitted range
+* Five wards, made up of 43,586 electors, will move to a different constituency
+  + This represents 29% of electors in the borough
+* The integrity of Halifax constituency is largely maintained
+* **Hipperholme and Lightcliffe** is now orphaned from the rest of the borough
+  + Their new constituency will be split across multiple Local Authorities

@@ -1,4 +1,4 @@
-Ward,ONS Code,Electorate,2019const,newconst,abbreviation
+﻿Ward,ONS Code,Electorate,const_2019,const_2023,abbreviation
 Brighouse,E05001371,8387,Calder Valley,Halifax,BRI
 Calder,E05001372,9456,Calder Valley,Calder Valley,CAL
 Elland,E05001373,8633,Calder Valley,Calder Valley,ELL
@@ -10,7 +10,7 @@ Northowram And Shelf,E05001378,9165,Halifax,Halifax,NS
 Ovenden,E05001379,8196,Halifax,Halifax,OVE
 Park,E05001380,9166,Halifax,Halifax,PAR
 Rastrick,E05001381,8389,Calder Valley,Halifax,RAS
-Ryburn,E05001382,9068,Calder Valley,Calder Valley,BRI
+Ryburn,E05001382,9068,Calder Valley,Calder Valley,RYB
 Skircoat,E05001383,9688,Halifax,Halifax,SKI
 Sowerby Bridge,E05001384,8793,Halifax,Calder Valley,SB
 Todmorden,E05001385,9168,Calder Valley,Calder Valley,TOD
