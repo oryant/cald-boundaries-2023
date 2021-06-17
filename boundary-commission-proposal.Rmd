@@ -113,7 +113,7 @@ t1 <- wards %>%
 knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args = list(big.mark = ","))
 ```
 
-## Thoughts
+## Observations
 
 * This achieves the commission's objectives -- both constituencies are of equal size and within the permitted range
 * Five wards, made up of 43,586 electors, will move to a different constituency
