@@ -12,7 +12,7 @@ shp_newconst <- read_sf('./shapefiles/proposed_const.shp',
                         query = "SELECT Constituen AS Constituency, Electorate FROM proposed_const WHERE Constituen IN (\'Halifax\', \'Calder Valley\', \'Batley and Hipperholme\')") # proposed constituencies
 
 # Load ward data
-wards <- fread('./data/calderdale_wards.csv', select=c('Ward', 'ONS Code', '2019const', 'newconst', 'abbreviation')) # 
+wards <- fread('./data/calderdale_wards.csv', select=c('Ward', 'ONS Code', 'const_2019', 'const_2023', 'abbreviation')) # 
 
 # Load electorate from Electoral Commission ward data
 bc_wards <- read_sf('./shapefiles/existing_and_prospective_wards_for_2023_review.shp', query = "SELECT ons_code, electorate AS Electorate, popdensity FROM existing_and_prospective_wards_for_2023_review") %>%
@@ -71,7 +71,7 @@ shp_wards$nudge_y[shp_wards$abbreviation == "BRI"] <- 200
 # Plot current constituencies
 plot_curr_const <- ggplot(shp_wards)+
   mytheme+ 
-  geom_sf(aes(fill = X2019const, alpha = popdensity), col = "grey20")+
+  geom_sf(aes(fill = const_2019, alpha = popdensity), col = "grey20")+
   theme(
     legend.position = "bottom",
     legend.title = element_blank()
@@ -97,7 +97,7 @@ plot_curr_const <- ggplot(shp_wards)+
 plot_new_const <- ggplot(shp_wards)+
   mytheme+ 
   geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
-  geom_sf(aes(fill = newconst, alpha = popdensity), col = "grey20")+
+  geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
   theme(
     legend.position = "bottom",
     legend.title = element_blank()
