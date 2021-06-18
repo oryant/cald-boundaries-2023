@@ -102,7 +102,9 @@ ggplot(shp_wards)+
     aes(X, Y, label = abbreviation),
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y
-  )
+  )+
+    guides(colour = guide_legend(order = 2), 
+           shape = guide_legend(order = 1))
 ```
 
 ```{r, echo=FALSE}
