@@ -1,6 +1,9 @@
 ---
 title: "Alternatives"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +18,7 @@ library(ggspatial)
 # Load shapefiles
 shp_wards <- read_sf('./shapefiles/Wards_polygon.shp', query = "SELECT NAME FROM WARDS_polygon") # Calderdale ward shapefile
 shp_newconst <- read_sf('./shapefiles/proposed_const.shp', 
-                        query = "SELECT Constituen AS Constituency, Electorate FROM proposed_const WHERE Constituen IN (\'Halifax\', \'Calder Valley\', \'Batley and Hipperholme\')") # proposed constituencies
+                        query = "SELECT Constituen AS Constituency, Electorate FROM proposed_const WHERE Constituen IN (\'Halifax\', \'Calder Valley\', \'Batley and Hipperholme\', 'Huddersfield')") # proposed constituencies
 
 # Load ward data
 wards <- fread('./data/calderdale_wards.csv', select=c('Ward', 'ONS Code', 'const_2019', 'const_2023', 'abbreviation')) # 
@@ -53,7 +56,8 @@ shp_polling_stations <- read_sf('./shapefiles/polling_districts.geojson')
 pal_colours <- c(
   "Calder Valley" = "Blue",
   "Halifax" = "Red",
-  "Batley and Hipperholme" = "Grey"
+  "Batley and Hipperholme" = "Grey",
+  "Huddersfield" = "Grey"
   )
 
 pal_shapes <- c(
@@ -85,18 +89,21 @@ shp_wards$nudge_y[shp_wards$abbreviation == "BRI"] <- 200
 
 This page sets out initial ideas for alternative proposals.
 
-## Boundary Commission proposal but only moving two wards
+## Move Brighouse ward to Huddersfield
 
-The Boundary Commission appears to have prioritised creating two constituencies of near-equal size. This has meant moving four wards: **Sowerby Bridge**, **Warley**, **Brighouse**, and **Rastrick**. In fact, exchanging **Sowerby Bridge** and **Rastrick** wards only would result in two constituencies of the correct size. This would achieve the aims of the review but with less disruption to existing arrangements.
+This proposal involves moving **Brighouse** ward to the **Huddersfield** constituency to the south. This would require that **Hipperholme and Lightcliffe** become part of **Halifax**, so as not to split **Calder Valley** in half. To equalise the numbers, **Sowerby Bridge** is moved to **Calder Valley**.
 
 ```{r, echo=FALSE, out.width="100%"}
 shp_wards_alt_1 <- shp_wards
+shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Brighouse"] <- "Huddersfield"
+shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Hipperholme And Lightcliffe"] <- "Halifax"
+shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Sowerby Bridge"] <- "Calder Valley"
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Warley"] <- "Halifax"
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Rastrick"] <- "Calder Valley"
 
 ggplot(shp_wards_alt_1)+
   mytheme+ 
-  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
+#  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
   geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
   theme(
     legend.position = "bottom",
@@ -104,7 +111,7 @@ ggplot(shp_wards_alt_1)+
   )+
   scale_fill_manual(
       values = pal_colours,
-      limits = names(pal_colours)
+      limits = names(pal_colours)[c(1:2,4)]
   )+
   scale_alpha(range = c(0.75, 1), guide = "none")+
   geom_sf(data = shp_polling_stations, aes(shape = "Polling district"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
@@ -118,13 +125,70 @@ ggplot(shp_wards_alt_1)+
     )+
   guides(colour = guide_legend(order = 2), 
          shape = guide_legend(order = 1))
-```
 
-```{r, echo=FALSE}
 wards_alt_1 <- wards
+wards_alt_1$const_2023[wards_alt_1$Ward == "Brighouse"] <- "Huddersfield"
+wards_alt_1$const_2023[wards_alt_1$Ward == "Hipperholme And Lightcliffe"] <- "Halifax"
+wards_alt_1$const_2023[wards_alt_1$Ward == "Sowerby Bridge"] <- "Calder Valley"
 wards_alt_1$const_2023[wards_alt_1$Ward == "Warley"] <- "Halifax"
 wards_alt_1$const_2023[wards_alt_1$Ward == "Rastrick"] <- "Calder Valley"
+
 t1 <- wards_alt_1 %>%
+  select(const_2023, Electorate) %>%
+  filter(const_2023 %in% c("Halifax", "Calder Valley")) %>%
+  group_by(const_2023) %>%
+  summarise(Electorate = sum(Electorate))
+knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args = list(big.mark = ","))
+```
+
+This would leave **Huddersfield** as a very large constituency, well outside the permitted range However, it may be possible to move some or all of **Almondbury** to a rebalanced Dewsbury constituency to leave **Huddersfield** within the permitted range.
+
+## Move Rastrick ward to Huddersfield
+
+Moving **Rastrick** to **Huddersfield** has much the same effect as moving **Brighouse**, except that it does not divide **Calder Valley**. This means the rest of the wards in Calderdale are unchanged.
+
+```{r, echo=FALSE, out.width="100%"}
+shp_wards_alt_2 <- shp_wards
+shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Rastrick"] <- "Huddersfield"
+shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Hipperholme And Lightcliffe"] <- "Calder Valley"
+shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Brighouse"] <- "Calder Valley"
+shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Sowerby Bridge"] <- "Halifax"
+shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Warley"] <- "Halifax"
+
+ggplot(shp_wards_alt_2)+
+  mytheme+ 
+#  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
+  geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )+
+  scale_fill_manual(
+      values = pal_colours,
+      limits = names(pal_colours)[c(1:2,4)]
+  )+
+  scale_alpha(range = c(0.75, 1), guide = "none")+
+  geom_sf(data = shp_polling_stations, aes(shape = "Polling district"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
+  scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
+  geom_label(
+    data = shp_wards, 
+    size = 2,
+    aes(X, Y, label = abbreviation),
+    nudge_x = shp_wards$nudge_x,
+    nudge_y = shp_wards$nudge_y
+    )+
+  guides(colour = guide_legend(order = 2), 
+         shape = guide_legend(order = 1))
+
+wards_alt_2 <- wards
+wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Rastrick"] <- "Huddersfield"
+wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Hipperholme And Lightcliffe"] <- "Calder Valley"
+wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Brighouse"] <- "Calder Valley"
+wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Sowerby Bridge"] <- "Halifax"
+wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Warley"] <- "Halifax"
+
+
+t1 <- wards_alt_2 %>%
   select(const_2023, Electorate) %>%
   filter(const_2023 %in% c("Halifax", "Calder Valley")) %>%
   group_by(const_2023) %>%
@@ -134,9 +198,9 @@ knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args =
 
 ## Divide Luddenden ward
 
-This proposal involves dividing **Luddenden** ward between Halifax and Calder Valley constituencies. To bring Calder Valley into the permitted range, approximately 1,800 electors need to be moved.
+This proposal involves dividing **Luddenden** ward between **Halifax** and **Calder Valley** constituencies. To bring **Calder Valley** into the permitted range, approximately 1,800 electors need to be moved.
 
-This map shows the effect of moving the **Wainstalls**, **Luddenden**, **Luddendenfoot** and **Warley Wood** districts (shown in pink) into Halifax. This moves 3,374 electors.
+This map shows the effect of moving the **Wainstalls**, **Luddenden**, **Luddendenfoot** and **Warley Wood** districts (shown in pink) into **Halifax**. This moves 3,374 electors and results in two constituencies of very similar size.
 
 ```{r, echo=FALSE, out.width="100%"}
 ggplot(shp_wards)+
@@ -158,7 +222,7 @@ ggplot(shp_wards)+
   scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
   geom_label(
     data = shp_wards, 
-    size = 2.5,
+    size = 2,
     aes(X, Y, label = abbreviation),
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y
@@ -182,4 +246,4 @@ The Electoral Commission's own report already includes proposals to divide wards
 > ... [W]e also propose that the Gipton & Harehills ward be divided between the Leeds Central and Leeds East constituencies, with the area in the west of the ward, centred on Harehills, being included in the Leeds Central constituency, and the remainder of the ward, centred on Gipton, being included in our proposed Leeds East constituency ... If we were not to divide a ward in the City of Leeds, we consider that there would inevitably be more disruption to local ties.
 --- ibid §69
 
-This would leave the proposed Batley and Hipperholme with 66,845 electors - 2,879 short of the minimum required.
+This would leave the proposed **Batley and Hipperholme** constituency with 66,845 electors - 2,879 short of the minimum required.

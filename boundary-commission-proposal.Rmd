@@ -120,7 +120,7 @@ knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args =
 * This achieves the commission's objectives -- both constituencies are of equal size and within the permitted range
 * Five wards, made up of 43,586 electors, will move to a different constituency
   + This represents 29% of electors in the borough
-* The integrity of Halifax constituency is largely maintained
+* The integrity of **Halifax** constituency is largely maintained
 * **Hipperholme and Lightcliffe** is now orphaned from the rest of the borough
   + Their new constituency will be split across multiple Local Authorities
   
