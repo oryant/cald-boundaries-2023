@@ -9,6 +9,8 @@ navbar:
       href: "current-position.html"
     - text: "Boundary Commission proposal"
       href: "boundary-commission-proposal.html"
+    - text: "Alternatives"
+      href: "alternatives.html"
   right:
     - text: "Sources"
       href: "sources.html"
