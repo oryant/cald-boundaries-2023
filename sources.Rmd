@@ -1,0 +1,21 @@
+---
+title: "Sources"
+output: html_document
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs") })
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Geospatial data
+
+* [Calderdale MBC ward boundaries](https://data.gov.uk/dataset/10f72c28-bde8-4ff1-b944-0910eea535be/ward-boundaries)
+* [Calderdale MBC polling stations](https://data.gov.uk/dataset/c1cf0109-3272-4ff3-bd06-8a7b6963a8b1/polling-districts)
+* [Boundary Commission proposed constituency boundaries](https://boundarycommissionforengland.independent.gov.uk/2023-review/yorkshire-and-the-humber/)
+
+## Tools
+
+* [R project source code](https://github.com/oryant/cald-boundaries-2023)
+* [R Studio](https://www.rstudio.com/)
+* [ggplot2 (for creating maps)](https://ggplot2.tidyverse.org/)
