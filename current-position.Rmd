@@ -117,8 +117,8 @@ knitr::kable(t1, col.names = c("2019 Constituency", "Electorate"), format.args =
 
 ## (No) Simple Solutions
 
-Evidently, there is no single ward that could be moved from Calder Valley to Halifax and still have both constituencies within the size restrictions. One or more wards would have to be exchanged, or the constituencies redrawn entirely. Wards that could be moved from Calder Valley to Halifax leaving both constituencies geographically unbroken are limited to **Hipperholme and Lightcliffe**, **Brighouse**, and **Luddenden**.
+Evidently, there is no single ward that could be moved from **Calder Valley** to **Halifax** and still have both constituencies within the size restrictions. One or more wards would have to be exchanged, or the constituencies redrawn entirely. Wards that could be moved from **Calder Valley** to **Halifax** leaving both constituencies geographically unbroken are limited to **Hipperholme and Lightcliffe**, **Brighouse**, and **Luddenden**.
 
-It would also be necessary to maintain some geographical consistency. It would not make sense to move **Town** ward to Calder Valley while leaving the rest of Halifax intact, for example.
+It would also be necessary to maintain some geographical consistency. It would not make sense to move **Town** ward to **Calder Valley** while leaving the rest of **Halifax** intact, for example.
 
 **Next:** [Boundary Commission Proposal](./boundary-commission-proposal.html)
