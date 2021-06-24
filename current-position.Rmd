@@ -49,7 +49,7 @@ pal_colours <- c(
   )
 
 pal_shapes <- c(
-  "Polling station" = 18
+  "Polling district" = 18
 )
 
 # Define plot theme
@@ -94,7 +94,7 @@ ggplot(shp_wards)+
     limits = names(pal_colours)[1:2], # We don't need Batley and Hipperholme for this map
   )+
   scale_alpha(range = c(0.75, 1), guide = "none")+
-  geom_sf(data = shp_polling_stations, aes(shape = "Polling station"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
+  geom_sf(data = shp_polling_stations, aes(shape = "Polling district"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
   scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
   geom_label(
     data = shp_wards, 

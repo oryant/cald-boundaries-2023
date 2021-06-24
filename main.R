@@ -32,6 +32,14 @@ shp_wards <- st_sf(shp_wards, sf_column_name = 'geometry')
 # Compute centroids, so we can add labels
 shp_wards <- cbind(shp_wards, st_coordinates(st_centroid(shp_wards)))
 
+# Import polling districts and extract two-letter abbreviation
+shp_polling_districts <- read_sf('./shapefiles/poll_dists.shp')
+n_last <- 2
+shp_polling_districts$LETTERS <- substr(shp_polling_districts$Name, nchar(shp_polling_districts$Name) - n_last + 1, nchar(shp_polling_districts$Name))
+
+# Compute centroids
+shp_polling_districts <- cbind(shp_polling_districts, st_coordinates(st_centroid(shp_polling_districts)))
+
 # Import Polling stations
 shp_polling_stations <- read_sf('./shapefiles/polling_districts.geojson')
 
@@ -120,14 +128,13 @@ plot_new_const <- ggplot(shp_wards)+
   labs(title = "Proposed constituency arrangement from 2023",
        subtitle = "Boundary Commission for England initial proposal, 8 June 2021")
 
-# Create a table of electorate per constituency
+# Plot polling stations over districts
 
-library(gridExtra)
+ggplot(shp_polling_districts)+
+  mytheme+
+  geom_sf()+
+  geom_sf(data = shp_polling_stations)
+  
 
-tbl_wards <- wards %>% select(Ward, Electorate) %>% tableGrob()
 
-# Place plot and table side-by-side
-grid.arrange(plot_new_const, tbl_wards,
-             nrow=1,
-             as.table=T
-             )
+
