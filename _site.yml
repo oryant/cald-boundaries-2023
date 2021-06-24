@@ -9,6 +9,9 @@ navbar:
       href: "current-position.html"
     - text: "Boundary Commission proposal"
       href: "boundary-commission-proposal.html"
+  right:
+    - text: "Sources"
+      href: "sources.html"
 output:
   html_document:
    theme: cosmo
