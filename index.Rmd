@@ -85,9 +85,9 @@ With the exception of two constituencies covering the Isle of Wight, each consti
 
 ## Calderdale
 
-```{r, echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 # Plot current constituencies
-ggplot(shp_wards)+
+plt <- ggplot(shp_wards)+
   mytheme+ 
   geom_sf(aes(alpha = popdensity), col = "grey20")+
   theme(
@@ -104,8 +104,13 @@ ggplot(shp_wards)+
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y
   )
+plt
+ggsave(
+  './docs/downloads/ward_boundaries.svg',
+  plot = plt,
+)
 ```
-
+Download map as [SVG](./downloads/ward_boundaries.svg)
 ```{r echo=FALSE}
 t1 <- subset(wards, select=c("Ward", "Electorate", "abbreviation"))
 func <- function(z) if (is.numeric(z)) sum(z) else ''

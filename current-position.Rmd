@@ -81,8 +81,8 @@ shp_wards$nudge_y[shp_wards$abbreviation == "BRI"] <- 200
 
 ## Constituency Boundaries
 
-```{r, echo=FALSE, out.width="100%"}
-ggplot(shp_wards)+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
+plt <- ggplot(shp_wards)+
   mytheme+ 
   geom_sf(aes(fill = const_2019, alpha = popdensity), col = "grey20")+
   theme(
@@ -105,8 +105,13 @@ ggplot(shp_wards)+
   )+
     guides(colour = guide_legend(order = 2), 
            shape = guide_legend(order = 1))
+plt
+ggsave(
+  './docs/downloads/current_constituencies.svg',
+  plot = plt
+)
 ```
-
+Download map as [SVG](./downloads/current_constituencies.svg)
 ```{r, echo=FALSE}
 t1 <- wards %>%
   select(const_2019, Electorate) %>%
