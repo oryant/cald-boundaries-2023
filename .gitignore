@@ -3,4 +3,5 @@
 *.Rproj
 existing_and_prospective_wards_for_2023_review.*
 main.R
+pdf_gen
 
