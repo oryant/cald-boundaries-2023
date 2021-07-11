@@ -93,7 +93,7 @@ This page sets out initial ideas for alternative proposals.
 
 This proposal involves moving **Brighouse** ward to the **Huddersfield** constituency to the south. This would require that **Hipperholme and Lightcliffe** become part of **Halifax**, so as not to split **Calder Valley** in half. To equalise the numbers, **Sowerby Bridge** is moved to **Calder Valley**.
 
-```{r, echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 shp_wards_alt_1 <- shp_wards
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Brighouse"] <- "Huddersfield"
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Hipperholme And Lightcliffe"] <- "Halifax"
@@ -101,7 +101,7 @@ shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Sowerby Bridge"] <- "Calder 
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Warley"] <- "Halifax"
 shp_wards_alt_1$const_2023[shp_wards_alt_1$NAME == "Rastrick"] <- "Calder Valley"
 
-ggplot(shp_wards_alt_1)+
+plt <- ggplot(shp_wards_alt_1)+
   mytheme+ 
 #  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
   geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
@@ -125,7 +125,14 @@ ggplot(shp_wards_alt_1)+
     )+
   guides(colour = guide_legend(order = 2), 
          shape = guide_legend(order = 1))
-
+plt
+ggsave(
+  './docs/downloads/alt_brig_hudds.svg',
+  plot = plt
+)
+```
+Download map as [SVG](./downloads/alt_brig_hudds.svg)
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 wards_alt_1 <- wards
 wards_alt_1$const_2023[wards_alt_1$Ward == "Brighouse"] <- "Huddersfield"
 wards_alt_1$const_2023[wards_alt_1$Ward == "Hipperholme And Lightcliffe"] <- "Halifax"
@@ -147,7 +154,7 @@ This would leave **Huddersfield** as a very large constituency, well outside the
 
 Moving **Rastrick** to **Huddersfield** has much the same effect as moving **Brighouse**, except that it does not divide **Calder Valley**. This means the rest of the wards in Calderdale are unchanged.
 
-```{r, echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 shp_wards_alt_2 <- shp_wards
 shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Rastrick"] <- "Huddersfield"
 shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Hipperholme And Lightcliffe"] <- "Calder Valley"
@@ -155,7 +162,7 @@ shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Brighouse"] <- "Calder Valle
 shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Sowerby Bridge"] <- "Halifax"
 shp_wards_alt_2$const_2023[shp_wards_alt_1$NAME == "Warley"] <- "Halifax"
 
-ggplot(shp_wards_alt_2)+
+plt <- ggplot(shp_wards_alt_2)+
   mytheme+ 
 #  geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
   geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
@@ -179,7 +186,14 @@ ggplot(shp_wards_alt_2)+
     )+
   guides(colour = guide_legend(order = 2), 
          shape = guide_legend(order = 1))
-
+plt
+ggsave(
+  './docs/downloads/alt_rast_hudds.svg',
+  plot = plt
+)
+```
+Download map as [SVG](./downloads/alt_rast_hudds.svg)
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 wards_alt_2 <- wards
 wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Rastrick"] <- "Huddersfield"
 wards_alt_2$const_2023[shp_wards_alt_1$Ward == "Hipperholme And Lightcliffe"] <- "Calder Valley"
@@ -202,8 +216,8 @@ This proposal involves dividing **Luddenden** ward between **Halifax** and **Cal
 
 This map shows the effect of moving the **Wainstalls**, **Luddenden**, **Luddendenfoot** and **Warley Wood** districts (shown in pink) into **Halifax**. This moves 3,374 electors and results in two constituencies of very similar size.
 
-```{r, echo=FALSE, out.width="100%"}
-ggplot(shp_wards)+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
+plt <- ggplot(shp_wards)+
   mytheme+ 
   geom_sf(aes(fill = const_2019, alpha = popdensity), col = "grey20")+
   theme(
@@ -227,8 +241,13 @@ ggplot(shp_wards)+
     nudge_x = shp_wards$nudge_x,
     nudge_y = shp_wards$nudge_y
   )
+plt
+ggsave(
+  './docs/downloads/alt_ludd.svg',
+  plot = plt
+)
 ```
-
+Download map as [SVG](./downloads/alt_ludd.svg)
 ``` {r, echo=FALSE}
 constit <- c('Calder Valley', 'Halifax')
 elect <- c(75450, 75100)

@@ -79,8 +79,8 @@ shp_wards$nudge_y[shp_wards$abbreviation == "BRI"] <- 200
 
 --- [Boundary Commission Initial proposals](https://boundarycommissionforengland.independent.gov.uk/wp-content/uploads/2021/06/2021-06-08-Initial-Proposals-Yorkshire-and-the-Humber-Region.pdf)
 
-```{r, echo=FALSE, out.width="100%"}
-ggplot(shp_wards)+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
+plt <- ggplot(shp_wards)+
   mytheme+ 
   geom_sf(data = shp_newconst, col = "grey75", alpha = 0, linetype = "dashed")+
   geom_sf(aes(fill = const_2023, alpha = popdensity), col = "grey20")+
@@ -104,8 +104,13 @@ ggplot(shp_wards)+
     )+
   guides(colour = guide_legend(order = 2), 
          shape = guide_legend(order = 1))
+plt
+ggsave(
+  './docs/downloads/bc_proposal.svg',
+  plot = plt
+)
 ```
-
+Download map as [SVG](./downloads/bc_proposal.svg)
 ```{r, echo=FALSE}
 t1 <- wards %>%
   select(const_2023, Electorate) %>%
