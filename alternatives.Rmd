@@ -214,7 +214,7 @@ knitr::kable(t1, col.names = c("2023 Constituency", "Electorate"), format.args =
 
 This proposal involves dividing **Luddenden** ward between **Halifax** and **Calder Valley** constituencies. To bring **Calder Valley** into the permitted range, approximately 1,800 electors need to be moved.
 
-This map shows the effect of moving the **Wainstalls**, **Luddenden**, **Luddendenfoot** and **Warley Wood** districts (shown in pink) into **Halifax**. This moves 3,374 electors and results in two constituencies of very similar size.
+This map shows the effect of moving the **Wainstalls (GA)**, **Luddenden (GB)**, **Luddendenfoot (GC)** and **Warley Wood (GD)** districts (shown in pink) into **Halifax**. This moves 3,374 electors and results in two constituencies of very similar size.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 plt <- ggplot(shp_wards)+
@@ -254,6 +254,51 @@ elect <- c(75450, 75100)
 knitr::kable(data.frame(constit, elect), col.names = c("2023 Constituency", "Electorate"), format.args = list(big.mark = ","))
 ```
 
+## Divide Hipperholme & Lightcliffe
+
+The proposal involves dividing **Hipperholme and Lightcliffe** between **Halifax** and **Calder Valley** constituencies.
+
+This map shows the effect of bringing the **Leeds Road (EA)** and **Hipperholme (EB)** polling districts into **Halifax**. 3,637 electors are moved, resulting in two neard-identical sized constituencies.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
+plt <- ggplot(shp_wards)+
+  mytheme+ 
+  geom_sf(aes(fill = const_2019, alpha = popdensity), col = "grey20")+
+  theme(
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )+
+  scale_fill_manual(
+    values = pal_colours,
+    limits = names(pal_colours)[1:2], # We don't need Batley and Hipperholme for this map
+  )+
+  scale_alpha(range = c(0.75, 1), guide = "none")+
+  geom_sf(data = shp_polling_districts %>% filter(LETTERS %in% c("EA", "EB")),
+          fill = "Pink",
+          col = "grey20")+
+  geom_sf(data = shp_polling_stations, aes(shape = "Polling district"), size = 1, fill = "grey20", col = "grey20")+ # Plot polling stations on map
+  scale_shape_manual(values = pal_shapes, breaks = names(pal_shapes))+
+  geom_label(
+    data = shp_wards, 
+    size = 2,
+    aes(X, Y, label = abbreviation),
+    nudge_x = shp_wards$nudge_x,
+    nudge_y = shp_wards$nudge_y
+  )
+plt
+ggsave(
+  './docs/downloads/alt_hl.svg',
+  plot = plt
+)
+```
+
+Download map as [SVG](./downloads/alt_hl.svg)
+
+``` {r, echo=FALSE}
+constit <- c('Calder Valley', 'Halifax')
+elect <- c(75187, 75363)
+knitr::kable(data.frame(constit, elect), col.names = c("2023 Constituency", "Electorate"), format.args = list(big.mark = ","))
+```
 The Electoral Commission's own report already includes proposals to divide wards in other constituencies:
 
 > ... We propose that the Manor Castle ward be transferred from the existing Sheffield Central constituency into our proposed Sheffield Heeley constituency, bringing the former within the permitted electorate range. We then propose retaining the existing division of the Richmond ward between the Sheffield Heeley and Sheffield South East constituencies. We propose including the south-west part of the ward, including the areas of Four Lane Ends and Intake, in the Sheffield Heeley constituency, and the remainder of the ward, centred on Richmond, in the Sheffield South East constituency. We recognise that this divides a ward between constituencies, but consider that doing so enables the retention of a significant number of existing constituencies largely unchanged.
