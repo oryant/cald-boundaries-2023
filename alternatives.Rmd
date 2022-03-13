@@ -258,7 +258,7 @@ knitr::kable(data.frame(constit, elect), col.names = c("2023 Constituency", "Ele
 
 The proposal involves dividing **Hipperholme and Lightcliffe** between **Halifax** and **Calder Valley** constituencies.
 
-This map shows the effect of bringing the **Leeds Road (EA)** and **Hipperholme (EB)** polling districts into **Halifax**. 3,637 electors are moved, resulting in two neard-identical sized constituencies.
+This map shows the effect of bringing the **Leeds Road (EA)** and **Hipperholme (EB)** polling districts into **Halifax**. 3,637 electors are moved, resulting in two near-identical sized constituencies.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE, out.width="100%"}
 plt <- ggplot(shp_wards)+
